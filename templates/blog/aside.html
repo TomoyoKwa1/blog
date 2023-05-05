@@ -1,0 +1,100 @@
+{% load static %}
+{% load blog_tags %}
+{% get_site_configs as SITE_CONFIGS %}
+
+<aside class="l_side">
+
+    <!-- side -->
+    <section class="author">
+        <div class="content pure">
+            <div class="avatar"><img class="avatar" src="{% static 'images/avatar.jpg' %}"></div>
+            <p><span id="lyrics" class="number">花散らせ今吹くこの嵐は、まさに春泥棒</span></p>
+                <script type="text/javascript">
+                setInterval(displayly,30000);
+                    function displayly() {
+                        var arr = ["花散らせ今吹くこの嵐は、まさに春泥棒",
+                                    "歴史に残るものが全てじゃないから",
+                                    "僕らは今靴を脱ぐ、さざなみは足を舐む",
+                                    "さらり花咲くや あから引く頬にさざなみ、夜は海"];
+
+                        var res = "";
+                        var ran = Math.floor(Math.random()*(arr.length));
+                        res = arr[ran];
+                        document.getElementById("lyrics").innerHTML = res;
+                    }
+                </script>
+        </div>
+    </section>
+
+
+    <!-- index -->
+    <section class="toc-wrapper">
+        <header class="pure toc-show-hide">
+            <div><i id="toc-icon" class="fas fa-caret-down fa-fw" aria-hidden="true"></i>Contents</div>
+        </header>
+        <div class="content pure" id="toc-content">
+            <ol class="toc"></ol>
+        </div>
+    </section>
+
+    <!-- ad -->
+    <section class="plain">
+        <header class="pure">
+            <div><i class="fas fa-bullhorn fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;Advisement </div>
+        </header>
+
+        <div class="content pure">
+            {% get_advertising as advertising %}
+            {% for ad in advertising %}
+            <a title="{{ ad.ad_name }}" href="{{ ad.ad_url }}" target="_blank"><img width="100%" src="{{ ad.img_url.url }}"></a>
+            {% endfor %}
+        </div>
+
+    </section>
+
+    <!-- hot -->
+    <section class="tagcloud">
+        <header class="pure"><div><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;hot</div></header>
+        <div class="content pure">
+            {% get_tags as tags_list %}
+            {% for tag in tags_list.tags %}
+            <a href="{% url 'blog:tags' tag.name %}" style="" title="{{ tag.num_posts }}topics">{{ tag.name }}({{ tag.num_posts }})</a>
+            {% empty %}
+                <a></a>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- links -->
+    <section class="list">
+        <header class="pure"><div><i class="fas fa-medal fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;Links</div></header>
+        <div class="content pure">
+            <ul class="entry">
+                {% get_links as links %}
+                {% for link in links %}
+                <li><a class="flat-box waves-effect waves-block" title="{{ link.name }}" href="{{ link.url }}" target="_blank"><div class="name"><i class="fas fa-link fa-fw" aria-hidden="true"></i> &nbsp;&nbsp;{{ link.name }}</div></a></li>
+                {% empty %}
+                <li><a class="flat-box waves-effect waves-block" title="" href="{% url 'blog:About' %}"><div class="name"><i class="fas fa-comment-dots fa-fw" aria-hidden="true"></i> &nbsp;&nbsp;nothing</div></a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+
+    <!-- music -->
+    {% get_music as music %}
+    {% if music %}
+    <section class="music">
+        <header class="pure">
+            <div><i class="fas fa-compact-disc fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;Music</div>
+            <a class="rightBtn" target="_blank" rel="external nofollow noopener noreferrer" href="{{ music.home_url }}" title="{{ music.home_url }}"><i class="far fa-heart fa-fw"></i></a>
+        </header>
+        <div class="content pure">
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.7.0/dist/APlayer.min.css">
+            <div class="aplayer" {% if music.autoplay %}data-autoplay="true"{% endif %} data-theme="#1BCDFC" data-mode="{{ music.mode }}" data-server="{{ music.server }}" data-type="{{ music.type }}" data-id="{{ music.play_id }}" data-volume="0.7"></div>
+            <script src="https://cdn.jsdelivr.net/npm/aplayer@1.7.0/dist/APlayer.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/meting@1.1.0/dist/Meting.min.js"></script>
+        </div>
+    </section>
+    {% endif %}
+</aside>
+<script src="{% static 'js/aside.js' %}"></script>
