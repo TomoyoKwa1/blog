@@ -11,7 +11,7 @@ SECRET_KEY = 'nrnen$7n$+(sm7qtu808qryubv$0)x$)y3)w9-84s)_#cjr2(l'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-ALLOWED_HOSTS = ['18.191.169.252']
+ALLOWED_HOSTS = ['*']
 
 
 # 正式部署时使用
@@ -107,10 +107,9 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static")  # 静态文件收集路径
-
+STATIC_ROOT = 'static' ## 新增行
 STATICFILES_DIRS = [
-   os.path.join(BASE_DIR, "common_static"),
+  os.path.join(BASE_DIR, '/static/'), ##修改地方
 ]
 
 MEDIA_URL = '/media/'
